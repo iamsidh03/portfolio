@@ -1,0 +1,226 @@
+.tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  border-radius: 24px;
+  transition: 0.3s ease;
+}
+
+.tile:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.bio-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skill-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  background: #1b1b1b;
+  border: 1px solid #333;
+  color: #d4d4d4;
+}
+/* Experience Tile */
+.experience-tile {
+  background: linear-gradient(to bottom right, #111, #1a1a1a);
+}
+
+.exp-number {
+  font-size: 56px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.exp-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9ca3af;
+}
+/* Twitter Tile */
+.twitter-tile {
+  position: relative;
+  transition: 0.3s ease;
+  display: block;
+}
+
+.tile-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.twitter-icon {
+  font-size: 20px;
+  color: #9ca3af;
+  transition: 0.3s ease;
+}
+
+.arrow {
+  opacity: 0;
+  transition: 0.3s ease;
+  color: #9ca3af;
+}
+
+.tile-bottom .twitter-handle {
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+/* Hover Effects */
+.twitter-tile:hover .twitter-icon {
+  color: #1da1f2;
+}
+
+.twitter-tile:hover .arrow {
+  opacity: 1;
+  color: #1da1f2;
+}
+/* Stack Tile */
+.stack-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional soft green glow like your original design */
+.stack-tile::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: rgba(16, 185, 129, 0.15);
+  filter: blur(60px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.stack-title {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.stack-list {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stack-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.stack-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.stack-value {
+  display: block;
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+  margin-top: 2px;
+}
+/* Location Tile */
+.location-tile {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=2070&auto=format&fit=crop");
+  filter: grayscale(100%);
+  transition: 0.3s ease;
+}
+
+/* On hover → remove grayscale */
+.location-tile:hover {
+  filter: grayscale(0%);
+}
+
+/* Dark overlay */
+.location-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  transition: 0.3s ease;
+}
+
+.location-tile:hover .location-overlay {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Location text box */
+.location-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: white;
+}
+/* LinkedIn Tile */
+.linkedin-tile {
+  position: relative;
+  transition: 0.3s ease;
+   display: block;
+}
+
+.linkedin-icon {
+  font-size: 20px;
+  color: #9ca3af;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.linkedin-label {
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+/* Reuse arrow hover */
+.linkedin-tile .arrow {
+  opacity: 0;
+  transition: 0.3s ease;
+  color: #9ca3af;
+}
+
+/* Hover effects */
+.linkedin-tile:hover .linkedin-icon {
+  color: #0077b5; /* LinkedIn blue */
+}
+
+.linkedin-tile:hover .arrow {
+  opacity: 1;
+  color: #0077b5;
+}
