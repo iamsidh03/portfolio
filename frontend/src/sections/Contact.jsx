@@ -4,7 +4,7 @@ import "../styles/contact.css";
 export default function Contact() {
   const CONTACT_EMAIL = "Siddharthraj4689@gmail.com.com";
   const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:5000";
+    import.meta.env.VITE_CONTACT_API || "http://localhost:5000";
 
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
