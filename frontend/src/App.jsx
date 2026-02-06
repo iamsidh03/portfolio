@@ -23,7 +23,7 @@ function App() {
     }
   };
 
-  // Scroll spy (detect current section)
+  // Scroll spy 
   useEffect(() => {
     const sections = ["home", "about", "work","DSA", "contact"];
 
