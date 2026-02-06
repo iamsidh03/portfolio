@@ -1,0 +1,527 @@
+/* ======================================================
+   ROOT THEME (LeetCode-style dark glass)
+====================================================== */
+:root {
+  --bg-card: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.02)
+  );
+
+  --border-soft: rgba(255, 255, 255, 0.14);
+  --text-muted: #9ca3af;
+  --text-soft: #d1d5db;
+
+  --easy: #22c1b6;
+  --medium: #f4c430;
+  --hard: #ef4444;
+}
+
+/* ======================================================
+   SECTION
+====================================================== */
+.leetcode-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.lc-section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 32px;
+  letter-spacing: 0.3px;
+}
+
+/* ======================================================
+   CARD
+====================================================== */
+.leetcode-card {
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px;
+  border-radius: 26px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(18px);
+  color: white;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ======================================================
+   HEADER SECTION
+====================================================== */
+.lc-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* ======================================================
+   HEADER (Avatar + Username + Rank)
+====================================================== */
+.lc-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Avatar */
+.lc-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 0 0 2px rgba(16, 185, 129, 0.25),
+    0 10px 22px rgba(0, 0, 0, 0.65);
+}
+
+/* User meta */
+.lc-user-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lc-username {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.lc-rank {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.lc-rank strong {
+  color: white;
+  font-weight: 600;
+}
+
+/* ======================================================
+   MINI CONTEST STATS (Glossy Cards)
+====================================================== */
+.lc-contest-stats-mini {
+  display: flex;
+  gap: 16px;
+}
+
+.contest-stat-mini {
+  min-width: 92px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  text-align: center;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.09),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 10px 28px rgba(0,0,0,0.55);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contest-stat-mini:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    0 18px 40px rgba(0,0,0,0.7);
+}
+
+.contest-stat-mini span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.contest-stat-mini strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Color accents */
+.contest-stat-mini:nth-child(1) strong { color: #facc15; }
+.contest-stat-mini:nth-child(2) strong { color: #60a5fa; }
+.contest-stat-mini:nth-child(3) strong { color: #34d399; }
+
+/* ======================================================
+   CONTENT GRID
+====================================================== */
+.lc-content-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+
+/* ======================================================
+   CONTEST CHART (Premium Glass + LeetCode Style)
+====================================================== */
+.lc-chart {
+  position: relative;
+  padding: 16px 18px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.01)
+  );
+
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Chart title */
+.chart-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+/* Wrapper */
+.chart-wrapper {
+  position: relative;
+  border-radius: 12px;
+}
+
+/* SVG */
+.chart-svg {
+  width: 100%;
+  height: auto;
+}
+
+/* Axis labels */
+.chart-svg text {
+  font-size: 11px;
+  fill: var(--text-muted);
+  opacity: 0.85;
+}
+
+/* Axis lines */
+.chart-svg line {
+  stroke: rgba(255,255,255,0.18);
+  stroke-width: 1;
+}
+
+/* Chart path (rating line) */
+.chart-svg path {
+  stroke: var(--medium);
+  stroke-width: 2.6;
+  fill: none;
+
+  filter:
+    drop-shadow(0 0 6px rgba(250,204,21,0.45))
+    drop-shadow(0 0 12px rgba(250,204,21,0.25));
+}
+
+/* Data points */
+.chart-svg circle {
+  transition:
+    r 0.2s ease,
+    filter 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* Hovered point */
+.chart-svg circle:hover {
+  r: 6;
+  filter:
+    drop-shadow(0 0 8px rgba(250,204,21,0.9))
+    drop-shadow(0 0 16px rgba(250,204,21,0.6));
+}
+
+/* ======================================================
+   TOOLTIP (Native LeetCode Feel)
+====================================================== */
+.chart-tooltip {
+  position: absolute;
+  transform: translate(-50%, -120%);
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(17,24,39,0.98),
+    rgba(17,24,39,0.9)
+  );
+
+  border: 1px solid rgba(255,255,255,0.16);
+  backdrop-filter: blur(10px);
+
+  pointer-events: none;
+  z-index: 30;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  animation: tooltipFade 0.18s ease-out;
+}
+
+/* Tooltip animation */
+@keyframes tooltipFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -130%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -120%);
+  }
+}
+
+/* Tooltip content */
+.chart-tooltip strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--medium);
+}
+
+.chart-tooltip span {
+  display: block;
+  font-size: 12px;
+  margin-top: 2px;
+  color: white;
+}
+
+.chart-tooltip small {
+  display: block;
+  font-size: 11px;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+
+/* ======================================================
+   RING SECTION
+====================================================== */
+.lc-ring-section {
+  display: flex;
+  justify-content: center;
+}
+
+.lc-ring-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 26px;
+  border-radius: 18px;
+
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 14px 40px rgba(0,0,0,0.55);
+}
+
+/* ======================================================
+   RING (SVG)
+====================================================== */
+.lc-ring-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.lc-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.lc-ring-svg circle {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.45));
+}
+
+/* Center text */
+.lc-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.lc-ring-center strong {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.lc-ring-center strong span {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.ring-sub {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #22c55e;
+}
+
+/* ======================================================
+   DIFFICULTY BREAKDOWN (Glossy Cards)
+====================================================== */
+.lc-breakdown {
+  display: grid;
+  gap: 14px;
+}
+
+/* Individual difficulty card */
+.lc-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 16px;
+  width: 180px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.02)
+  );
+
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+
+  font-size: 14px;
+  color: var(--text-soft);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Hover interaction */
+.lc-stat:hover {
+  transform: translateY(-2px);
+  border-color: #04ad42; /* green border */
+  box-shadow:
+    0 14px 32px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(34,197,94,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* Label (Easy / Medium / Hard) */
+.lc-stat span {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Value (157/922 etc) */
+.lc-stat strong {
+  font-weight: 700;
+  font-size: 15px;
+  color: white;
+}
+
+
+/* ======================================================
+   LINK
+====================================================== */
+.lc-link {
+  display: inline-block;
+  margin-top: 30px;
+  font-size: 14px;
+  color: #10b981;
+  text-decoration: none;
+}
+
+.lc-link:hover {
+  text-decoration: underline;
+}
+
+/* ======================================================
+   STATES
+====================================================== */
+.leetcode-card.muted {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+@media (max-width: 900px) {
+  .lc-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lc-ring-section {
+    margin-top: 28px;
+  }
+
+  .lc-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .lc-contest-stats-mini {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .leetcode-card {
+    padding: 24px;
+  }
+
+  .lc-ring-card {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .lc-breakdown {
+    align-items: center;
+  }
+}

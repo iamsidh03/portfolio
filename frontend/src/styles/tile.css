@@ -147,46 +147,69 @@
   font-weight: 500;
   margin-top: 2px;
 }
-/* Location Tile */
-.location-tile {
+/* Hobbies Tile */
+.hobbies-tile {
   position: relative;
   overflow: hidden;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.75)
+    ),
+    url("https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=2070&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
-  background-image: url("https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=2070&auto=format&fit=crop");
-  filter: grayscale(100%);
   transition: 0.3s ease;
 }
 
-/* On hover → remove grayscale */
-.location-tile:hover {
-  filter: grayscale(0%);
+/* Content wrapper */
+.hobbies-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Dark overlay */
-.location-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  transition: 0.3s ease;
+/* Title */
+.hobbies-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
 }
 
-.location-tile:hover .location-overlay {
-  background: rgba(0, 0, 0, 0.25);
+/* Grid */
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
-/* Location text box */
-.location-label {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 6px;
-  backdrop-filter: blur(4px);
+/* Hobby card */
+.hobbies-grid span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  padding: 10px 0;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: white;
+
+  transition: 0.25s ease;
+}
+
+/* Hover effect */
+.hobbies-grid span:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
 }
 /* LinkedIn Tile */
 .linkedin-tile {
@@ -223,4 +246,53 @@
 .linkedin-tile:hover .arrow {
   opacity: 1;
   color: #0077b5;
+}
+
+.stack-tile {
+  position: relative;        
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 6px;
+
+  scroll-behavior: smooth;
+}
+
+/* scrollbar styling */
+.stack-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.stack-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.stack-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* bottom fade hint */
+.stack-tile::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.9)
+  );
+  pointer-events: none;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/nav.css";
 
 export default function Nav({ activeSection, scrollTo }) {
-  const menu = ["home", "about", "work", "contact"];
+  const menu = ["home", "about", "work","DSA", "contact"];
 
   return (
     <nav className="floating-nav">

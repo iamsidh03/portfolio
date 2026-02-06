@@ -1,0 +1,163 @@
+/* ===== Work Section ===== */
+.work-section {
+  padding: 120px 0;
+}
+
+/* Header */
+.work-header {
+  margin-bottom: 96px;
+  max-width: 720px;
+}
+
+.work-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
+}
+
+.work-subtitle {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #9ca3af;
+}
+
+/* Projects */
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+}
+
+/* Card */
+.project-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .project-card {
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .project-card.reverse {
+    grid-template-columns: 1fr 1.4fr;
+  }
+
+  .project-card.reverse .project-media {
+    order: 2;
+  }
+}
+
+/* Media */
+.project-media {
+  height: 360px;
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.65)
+  );
+  z-index: 1;
+}
+
+.project-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.12),
+    transparent 60%
+  );
+  z-index: 1;
+}
+
+.project-card:hover .project-media {
+  transform: translateY(-10px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.65);
+}
+
+/* Index */
+.project-index {
+  position: absolute;
+  bottom: 18px;
+  right: 24px;
+  font-size: 72px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.12);
+  z-index: 2;
+}
+
+/* Content */
+.project-content {
+  max-width: 540px;
+}
+
+.project-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+}
+
+.project-title span {
+  color: #9ca3af;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.project-desc {
+  margin-top: 16px;
+  color: #9ca3af;
+  line-height: 1.75;
+}
+
+/* Tags */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.project-tags span {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e5e7eb;
+}
+
+/* CTA (IMPROVED UX) */
+.project-cta {
+  display: inline-block;
+  font-weight: 500;
+  color: #10b981;
+  margin-top: 8px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.project-card:hover .project-cta {
+  transform: translateX(6px);
+}

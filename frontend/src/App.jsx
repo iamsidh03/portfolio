@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 import Hero from "./sections/Hero";
-import About from './sections/About';
-import Work from './sections/Work';
-import Contact from './sections/Contact';
+import About from "./sections/About";
+import Work from "./sections/Work";
+import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import Nav from "./sections/Nav";
 
-import './styles/globals.css';
+
+import "./styles/globals.css";
+import LeetCode from "./sections/Leetcode";
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
@@ -23,7 +25,7 @@ function App() {
 
   // Scroll spy (detect current section)
   useEffect(() => {
-    const sections = ["home", "about", "work", "contact"];
+    const sections = ["home", "about", "work","DSA", "contact"];
 
     const handleScroll = () => {
       let current = "home";
@@ -45,17 +47,16 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans">
-
       <Nav activeSection={activeSection} scrollTo={scrollTo} />
 
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32 space-y-24">
-        <Hero scrollTo={scrollTo}/>
+        <Hero scrollTo={scrollTo} />
         <About />
         <Work />
+        <LeetCode/>
         <Contact />
         <Footer />
       </main>
-
     </div>
   );
 }
