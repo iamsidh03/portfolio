@@ -9,7 +9,7 @@ import Nav from "./sections/Nav";
 
 
 import "./styles/globals.css";
-import LeetCode from "./sections/Leetcode";
+import LeetCode from "./sections/LeetCode";
 
 function App() {
   const [activeSection, setActiveSection] = useState("home");
