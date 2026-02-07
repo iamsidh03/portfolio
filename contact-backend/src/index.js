@@ -42,7 +42,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://portfolio-19y5.onrender.com",
-      "https://portfolio-rust-seven-57j41rsy8w.vercel.app/",
+      "https://portfolio-7op2jeowl-siddharth-rajs-projects-07008074.vercel.app/",
     ],
     methods: ["GET", "POST"],
   })
