@@ -29,26 +29,29 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 */
-import "../env.js"; // MUST be first line
+import "../env.js"; // keep this first
 
 import express from "express";
 import cors from "cors";
 import contactRoutes from "./routes/contact.routes.js";
 
 const app = express();
+
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "https://portfolio-19y5.onrender.com",
-      "https://portfolio-7op2jeowl-siddharth-rajs-projects-07008074.vercel.app"
+      "https://portfolio-7op2jeowl-siddharth-rajs-projects-07008074.vercel.app",
+      "https://portfolio-rust-seven-57j41rsy8w.vercel.app"
     ],
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
 );
-app.options("*", cors());
+
 app.use(express.json());
+
 app.use("/api", contactRoutes);
 
 const PORT = process.env.PORT || 5000;
