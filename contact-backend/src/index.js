@@ -36,18 +36,18 @@ import cors from "cors";
 import contactRoutes from "./routes/contact.routes.js";
 
 const app = express();
-
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "https://portfolio-19y5.onrender.com",
-      "https://portfolio-7op2jeowl-siddharth-rajs-projects-07008074.vercel.app/",
+      "https://portfolio-7op2jeowl-siddharth-rajs-projects-07008074.vercel.app"
     ],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   })
 );
-
+app.options("*", cors());
 app.use(express.json());
 app.use("/api", contactRoutes);
 
