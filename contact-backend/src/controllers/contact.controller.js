@@ -1,3 +1,5 @@
+
+/*
 import nodemailer from "nodemailer";
 
 export const sendContactEmail = async (req, res) => {
@@ -46,5 +48,39 @@ export const sendContactEmail = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Email failed to send" });
+  }
+};
+*/
+
+
+import { Resend } from "resend";
+
+export const sendContactEmail = async (req, res) => {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    await resend.emails.send({
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: process.env.CONTACT_EMAIL,
+      replyTo: email,
+      subject: "New Contact Form Message",
+      html: `
+        <h3>New Message</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p>${message}</p>
+      `,
+    });
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Resend error:", error);
+    res.status(500).json({ error: "Email failed to send" });
   }
 };

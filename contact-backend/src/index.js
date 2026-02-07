@@ -1,3 +1,4 @@
+/*
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -26,4 +27,30 @@ app.use("/api", contactRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+*/
+import "../env.js"; // MUST be first line
+
+import express from "express";
+import cors from "cors";
+import contactRoutes from "./routes/contact.routes.js";
+
+const app = express();
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://portfolio-19y5.onrender.com",
+    ],
+    methods: ["GET", "POST"],
+  })
+);
+
+app.use(express.json());
+app.use("/api", contactRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
