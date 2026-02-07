@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/contact.css";
 
 export default function Contact() {
-  const CONTACT_EMAIL = "Siddharthraj4689@gmail.com.com";
+  const CONTACT_EMAIL = "Siddharthraj4689@gmail.com";
   const API_URL =
     import.meta.env.VITE_CONTACT_API || "http://localhost:5000";
 
