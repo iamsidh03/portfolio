@@ -1,747 +1,431 @@
-# Project Documentation
+<div align="center">
 
-**Full-Stack Portfolio Platform**
+# Full-Stack AI Portfolio
 
----
+### A portfolio that doesn't just show your work — it talks about it.
 
-## 1. Introduction
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-10b981?style=for-the-badge\&logo=vercel\&logoColor=white)](https://portfolio-rust-seven-57j41rsy8w.vercel.app/)
 
-This document provides a **complete technical and functional documentation** of the Portfolio project.
-It explains:
 
-* What the project does
-* How the system is designed
-* How different parts communicate
-* How to run, deploy, and maintain the project
-* Why certain architectural decisions were made
 
-The project is designed and implemented as a **production-ready full-stack application**, not a demo or static site.
+
+</div>
 
 ---
 
-## 2. Project Purpose
+## What Is This?
 
-The goal of this project is to create a **professional developer portfolio platform** that:
+This is not a static portfolio. It's a **production-grade full-stack platform** built with real backend services, live data APIs, and an AI assistant that answers questions about me in real time.
 
-1. Showcases personal and technical information
-2. Displays live coding statistics from LeetCode
-3. Allows visitors to contact the owner via email
-4. Uses real backend services and real deployments
-5. Follows industry-standard practices
+Instead of scrolling through a page, visitors can ask **Jiya** — my personal AI assistant — anything about my skills, projects, or experience and get accurate, context-aware answers instantly.
+
+> Built with React · Node.js · Express · Gemini AI · Resend · Vercel · Render
 
 ---
 
-## 3. System Overview
+## Features
 
-The project is composed of **three independent applications**:
-
-1. **Frontend (React)**
-2. **Contact Backend (Email Service)**
-3. **LeetCode Backend (Stats API)**
-
-These are deployed independently and communicate over HTTP.
+| Feature                   | Description                                                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Jiya AI Assistant**     | RAG-style AI bot embedded in the nav. Answers questions about me using live GitHub + LeetCode data as context |
+| **Live LeetCode Stats**   | Real-time problem counts, contest rating history chart, and global ranking pulled from LeetCode's GraphQL API |
+| **Working Contact Form**  | Form submissions trigger real emails via the Resend API — no SMTP, no timeouts                                |
+| **Bento Grid Design**     | Dark, professional UI with emerald accents, scroll-reveal animations, and per-section design consistency      |
+| **Fully Responsive**      | Designed mobile-first. Works across all screen sizes                                                          |
+| **Performance Optimised** | 10-minute server-side caching on LeetCode data. Parallel API fetching in the AI bot                           |
 
 ---
 
-## 4. High-Level Architecture
+## System Architecture
 
 ```
 Browser
-   |
-   |---> Frontend (Vercel)
-            |
-            |---> Contact Backend (Render)
-            |        |
-            |        ---> Resend Email API
-            |
-            |---> LeetCode Backend (Render)
-                     |
-                     ---> LeetCode Data Source
+   │
+   ├──▶ Frontend (React + Vite) ── Vercel
+   │         │
+   │         ├──▶ Contact Backend (Node + Express) ── Render
+   │         │              └──▶ Resend Email API
+   │         │
+   │         ├──▶ LeetCode Backend (Node + Express) ── Render
+   │         │              └──▶ LeetCode GraphQL API
+   │         │
+   │         └──▶ AI Bot Backend (Node + Express) ── Render
+   │                        ├──▶ GitHub REST API
+   │                        ├──▶ LeetCode GraphQL API
+   │                        └──▶ Google Gemini API
 ```
 
-This design follows a **service-oriented architecture**.
+Three independent backends, each with a **single responsibility**. When one service fails, the others keep working.
 
 ---
 
-## 5. Why Two Backends?
+## How the AI Bot Works
 
-Using two backends is **intentional and professional**.
+Jiya is not just a wrapper around an AI model. Here's the actual pipeline:
 
-### Reasons:
+```
+User Message
+     │
+     ▼
+AI Bot Backend receives query
+     │
+     ├── [Parallel] Fetch GitHub repos & activity
+     ├── [Parallel] Fetch LeetCode stats
+     └── [Parallel] Load static profile data
+     │
+     ▼
+Prompt Builder injects all context
+(profile + projects + stats + timeline)
+     │
+     ▼
+Structured prompt sent to Gemini API
+     │
+     ▼
+Response streamed back to frontend
+```
 
-* Each backend has a **single responsibility**
-* Failures are isolated
-* Easier scaling
-* Easier debugging
-* Mirrors real production systems
-
-| Backend          | Responsibility           |
-| ---------------- | ------------------------ |
-| Contact Backend  | Email delivery           |
-| LeetCode Backend | Coding stats & analytics |
-
----
-
-## 6. Technology Stack
-
-### Frontend
-
-* React
-* Vite
-* JavaScript
-* CSS / Utility-first styling
-* Hosted on Vercel
-
-### Backend
-
-* Node.js
-* Express.js
-* ES Modules
-* REST APIs
-* Hosted on Render
-
-### Email Service
-
-* Resend API
+This is a **RAG-style (Retrieval Augmented Generation)** approach. The AI doesn't guess — it has accurate, structured data injected before every query. That's why Jiya gives specific, correct answers instead of hallucinating.
 
 ---
 
-## 7. Repository Structure
+## Repository Structure
 
 ```
 portfolio/
 │
-├── frontend/
+├── frontend/                        # React + Vite application
 │   ├── src/
-│   ├── public/
-│   ├── package.json
+│   │   ├── assets/                  # Images, profile photo
+│   │   ├── components/
+│   │   │   ├── ui/
+│   │   │   │   └── Button.jsx
+│   │   │   ├── Nav.jsx              # Floating nav + Jiya trigger
+│   │   │   ├── ChatBot.jsx          # Jiya AI chat panel
+│   │   │   └── Footer.jsx
+│   │   ├── sections/
+│   │   │   ├── Hero.jsx
+│   │   │   ├── About.jsx
+│   │   │   ├── Work.jsx
+│   │   │   ├── LeetCode.jsx
+│   │   │   └── Contact.jsx
+│   │   ├── styles/                  # Per-section CSS files
+│   │   └── App.jsx
+│   ├── .env.example
+│   └── package.json
 │
-├── contact-backend/
+├── contact-backend/                 # Email service
 │   ├── src/
 │   │   ├── controllers/
 │   │   │   └── contact.controller.js
 │   │   ├── routes/
 │   │   │   └── contact.routes.js
 │   │   └── index.js
-│   ├── package.json
+│   ├── env.js
+│   └── package.json
 │
-├── leetcode-backend/
-│   ├── src/
-│   ├── package.json
+├── leetcode-backend/                # LeetCode stats service
+│   ├── server.js
+│   ├── leetcode.service.js
+│   ├── cache.js
+│   └── package.json
 │
 └── README.md
 ```
 
-Each folder is a **standalone application**.
+---
+
+## Tech Stack
+
+### Frontend
+
+* **React** + **Vite** — UI framework and build tool
+* **Tailwind CSS** — Utility-first styling
+* **Custom CSS** — Per-section bento grid layouts and animations
+* **ReactMarkdown** + **remark-gfm** — AI response rendering
+* **Lucide React** — Icon library
+
+### Backend (Contact Service)
+
+* **Node.js** + **Express 5** — Server framework
+* **Resend** — Production email delivery API
+* **dotenv** + **ES Modules** — Environment and module system
+
+### Backend (LeetCode Service)
+
+* **Node.js** + **Express** — Server framework
+* **Axios** — HTTP client for GraphQL requests
+* **In-memory cache** — 10-minute TTL to avoid rate limits
+
+### AI Bot Backend
+
+* **Node.js** + **Express** — Server framework
+* **Google Gemini API** — Language model
+* **GitHub REST API** — Repo and activity data
+* **LeetCode GraphQL API** — Real-time coding stats
+* **Custom prompt builder** — RAG-style context injection
+
+### Deployment
+
+* **Vercel** — Frontend hosting with auto-deploy on push
+* **Render** — Backend hosting (3 independent services)
 
 ---
 
-## 8. Frontend Documentation
+## Getting Started
 
-### Responsibilities
+### Prerequisites
 
-* UI rendering
-* Form handling
-* API communication
-* Error handling
-* User experience
-
-### Key Features
-
-* Portfolio sections
-* Live LeetCode stats visualization
-* Contact form
-* Responsive design
-
-### Environment Variables
-
-```
-VITE_CONTACT_API=https://portfolio-contact.onrender.com
-VITE_LEETCODE_API=https://portfolio-leetcode.onrender.com
-```
-
-These are injected at build time by Vercel.
+* Node.js 18+
+* npm or yarn
+* A Resend account and API key
+* A Google Gemini API key
+* A GitHub personal access token
 
 ---
 
-## 9. Contact Backend Documentation
+### 1. Clone the Repository
 
-### Purpose
-
-Handles all contact form submissions and email delivery.
-
-### Endpoint
-
-```
-POST /api/send-email
-```
-
-### Request Body
-
-```json
-{
-  "name": "User Name",
-  "email": "user@email.com",
-  "message": "Message content"
-}
-```
-
-### Response
-
-```json
-{
-  "success": true
-}
-```
-
----
-
-## 10. Email System (Resend)
-
-### Why Resend?
-
-* SMTP (Gmail) is unreliable in cloud environments
-* Resend is designed for transactional emails
-* Better deliverability and logging
-* Production-grade service
-
-### Email Flow
-
-1. Frontend sends POST request
-2. Backend validates input
-3. Backend sends email using Resend API
-4. Email appears in Resend dashboard and inbox
-
-### Sender Address
-
-```
-Portfolio Contact <onboarding@resend.dev>
-```
-
-This is expected unless a custom domain is configured.
-
----
-
-## 11. LeetCode Backend Documentation
-
-### Purpose
-
-Fetches, processes, and serves LeetCode statistics.
-
-### Responsibilities
-
-* Abstract LeetCode data fetching
-* Normalize response
-* Protect frontend from changes in data source
-
-### Benefits
-
-* Cleaner frontend
-* Centralized data logic
-* Easier future expansion
-
----
-
-## 12. Environment Variables (Security)
-
-Sensitive values are **never committed** to GitHub.
-
-### Contact Backend `.env`
-
-```
-PORT=5000
-CONTACT_EMAIL=example@gmail.com
-RESEND_API_KEY=your_key_here
-```
-
-### Hosting Platform
-
-* Variables are configured in Render dashboard
-* Frontend variables configured in Vercel dashboard
-
----
-
-## 13. CORS Configuration
-
-CORS is strictly configured to allow only trusted origins.
-
-Example:
-
-```js
-cors({
-  origin: [
-    "http://localhost:5173",
-    "https://portfolio.vercel.app"
-  ],
-  methods: ["GET", "POST", "OPTIONS"]
-});
-```
-
-This prevents unauthorized access.
-
----
-
-## 14. Local Development Guide
-
-### Step 1: Clone Repository
-
-```
+```bash
 git clone https://github.com/iamsidh03/portfolio.git
 cd portfolio
 ```
 
-### Step 2: Contact Backend
+---
 
-```
+### 2. Contact Backend
+
+```bash
 cd contact-backend
 npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5000
+CONTACT_EMAIL=your-email@gmail.com
+RESEND_API_KEY=re_your_key_here
+```
+
+```bash
 npm run dev
+# Runs on http://localhost:5000
 ```
 
-### Step 3: LeetCode Backend
+---
 
-```
+### 3. LeetCode Backend
+
+```bash
 cd leetcode-backend
 npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5001
+```
+
+```bash
 npm run dev
+# Runs on http://localhost:5001
 ```
 
-### Step 4: Frontend
+---
 
-```
+### 4. Frontend
+
+```bash
 cd frontend
 npm install
+```
+
+Create a `.env` file:
+
+```env
+VITE_CONTACT_API=http://localhost:5000
+VITE_LEETCODE_API=http://localhost:5001
+VITE_AI_API=http://localhost:5002
+```
+
+```bash
 npm run dev
+# Runs on http://localhost:5173
 ```
 
 ---
 
-## 15. Deployment Strategy
+## Deployment
 
-### Frontend
+### Frontend → Vercel
 
-* Hosted on Vercel
-* Auto-deploy on GitHub push
-
-### Backends
-
-* Hosted on Render
-* Independent services
-* Auto-deploy on GitHub push
-
----
-
-## 16. Error Handling Strategy
-
-* Input validation on backend
-* Proper HTTP status codes
-* Frontend user feedback
-* Server logs for debugging
-
----
-
-## 17. Known Production Challenges Solved
-
-* CORS errors
-* Environment variable misconfiguration
-* SMTP timeouts
-* Cloud email restrictions
-* Build-time vs runtime variables
-* Preflight OPTIONS requests
-
-
----
-
-# Challenges Faced While Building This Project
-
-## From Idea → Architecture → Development → Deployment
-
-### And How Each Challenge Was Solved Step by Step
-
----
-
-## 1. Challenge at the Very Start:
-
-### “What exactly should I build?”
-
-### Problem
-
-At the beginning, the biggest challenge was **not coding**, but **clarity**.
-
-Questions that came up:
-
-* Should this be just a static portfolio?
-* Should it include backend features?
-* Should it show real data or dummy data?
-* Should it be beginner-level or industry-level?
-
-Most beginners stop at a static website.
-
-### Decision Taken
-
-I decided that:
-
-* This should **not** be a static portfolio
-* It should behave like a **real product**
-* It should have:
-
-  * Real backend services
-  * Real APIs
-  * Real email sending
-  * Real deployment
-
-### Resolution
-
-I clearly defined **project goals**:
-
-* A professional portfolio frontend
-* A backend to fetch LeetCode data
-* A backend to handle contact form emails
-* Everything deployed and working live
-
-This decision shaped everything that followed.
-
----
-
-## 2. Architecture-Level Challenge:
-
-### “Single backend or multiple backends?”
-
-### Problem
-
-Initially, it was tempting to:
-
-* Put everything into one backend
-* Or avoid backend completely
-
-But that approach would:
-
-* Mix unrelated responsibilities
-* Become hard to scale
-* Not reflect real-world architecture
-
-### Architectural Confusion
-
-Questions:
-
-* Should LeetCode logic and Contact form logic be together?
-* What if one service fails?
-* How to deploy safely?
-
-### Final Architecture Chosen
-
-I split the system into **three independent parts**:
-
-1. Frontend (React + Vite)
-2. LeetCode Backend (data fetching)
-3. Contact Backend (email sending)
-
-### Why This Was Challenging
-
-* Multiple servers
-* Multiple deployments
-* Multiple environment configurations
-* CORS between services
-
-### How I Resolved It
-
-I applied **Single Responsibility Principle**:
-
-* One backend = one job
-* Each service independently deployable
-* Failures isolated
-
-This is how real systems are built.
-
----
-
-## 3. Backend Development Challenge:
-
-### “It works locally but not in production”
-
-### Problem
-
-While building backend features:
-
-* APIs worked perfectly on localhost
-* But failed after deployment
-
-This created confusion:
-
-* Code looked correct
-* Logic was correct
-* But production behaved differently
-
-### Root Cause Identified
-
-Difference between:
-
-* Local environment
-* Cloud environment
-
-Specifically:
-
-* `.env` works locally
-* Cloud platforms do not read `.env` automatically
-
-### Resolution Steps
-
-1. Learned that `.env` must **never** be relied on in production
-2. Removed `.env` from GitHub
-3. Used platform dashboards (Render / Vercel) to set variables
-4. Restarted services after each change
-
-This fixed environment-related failures.
-
----
-
-## 4. Email Sending Challenge (SMTP):
-
-### “Email works locally but fails after deployment”
-
-### Problem
-
-Contact form email sending:
-
-* Worked locally using Gmail SMTP
-* Failed on Render with timeout errors
-
-Errors seen:
-
-* Connection timeout
-* Authentication issues
-* No emails delivered
-
-### Why This Happened
-
-* Gmail SMTP is unreliable on cloud servers
-* Cloud IPs are often blocked by Gmail
-* SMTP is not ideal for serverless/cloud environments
-
-### Resolution
-
-Instead of fighting SMTP:
-
-* Switched to **Resend**, a production email service
-* Used API-based email sending instead of SMTP
-* Removed Gmail dependency completely
-
-This immediately stabilized email delivery.
-
----
-
-## 5. Resend Integration Challenge:
-
-### “Missing API key error”
-
-### Problem
-
-After integrating Resend, the backend crashed with:
+1. Push the `frontend/` folder to GitHub
+2. Import the repo in Vercel
+3. Set the root directory to `frontend`
+4. Add environment variables in the Vercel dashboard
 
 ```
-Missing API key. Pass it to new Resend("re_123")
+VITE_CONTACT_API=https://your-contact-backend.onrender.com
+VITE_LEETCODE_API=https://your-leetcode-backend.onrender.com
+VITE_AI_API=https://your-ai-backend.onrender.com
 ```
 
-### Root Cause
+### Backends → Render
 
-* Environment variable was not loading
-* `dotenv` was not executed before imports
-* ES Module loading order matters
+1. Create a new **Web Service** on Render for each backend
+2. Connect your GitHub repo
+3. Set the root directory to the specific backend folder
+4. Add environment variables in the Render dashboard
+5. Set the start command:
 
-### Resolution Steps
+   * Contact backend: `node src/index.js`
+   * LeetCode backend: `node server.js`
 
-1. Ensured environment loading happens **before usage**
-2. Verified variables via logs
-3. Confirmed API key exists in Render dashboard
-4. Redeployed backend
-
-This fixed the crash completely.
+> **Never commit `.env` files.** Always use platform dashboards for production secrets.
 
 ---
 
-## 6. CORS Challenge:
+## API Reference
 
-### “Backend works in Postman but not in browser”
-
-### Problem
-
-Frontend requests failed with:
+### Contact Backend
 
 ```
-Blocked by CORS policy
-No 'Access-Control-Allow-Origin' header
+POST /api/send-email
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "message": "Hey Siddharth, let's connect!"
+}
 ```
 
-But:
+**Response:**
 
-* Postman worked
-* Backend logic worked
-
-### Why This Was Confusing
-
-Postman ignores CORS.
-Browsers enforce it strictly.
-
-### Resolution
-
-1. Added proper CORS configuration
-2. Explicitly allowed:
-
-   * Localhost
-   * Vercel frontend domain
-3. Allowed required HTTP methods
-4. Redeployed backend
-
-After this, browser requests worked.
+```json
+{ "success": true }
+```
 
 ---
 
-## 7. OPTIONS / Preflight Request Crash
-
-### Problem
-
-Render logs showed:
+### LeetCode Backend
 
 ```
-PathError: Missing parameter name at index 1: *
+GET /api/user/:username
 ```
 
-### Root Cause
+**Response:**
 
-* Unsafe wildcard route handling
-* `app.options("*", ...)` caused conflicts in newer Express versions
-
-### Resolution
-
-* Removed wildcard OPTIONS route
-* Simplified CORS handling
-* Let Express manage preflight internally
-
-Backend stopped crashing.
-
----
-
-## 8. Frontend Deployment Challenge:
-
-### “Build works locally but fails on Vercel”
-
-### Problem
-
-Vercel build failed with:
-
-```
-Could not resolve './sections/Leetcode'
+```json
+{
+  "user": "siddharthraj3101",
+  "avatar": "https://...",
+  "ranking": 45231,
+  "solved": { "easy": 157, "medium": 89, "hard": 23, "all": 269 },
+  "total": { "easy": 800, "medium": 1700, "hard": 750, "all": 3250 },
+  "contest": {
+    "rating": 1487,
+    "globalRank": 82341,
+    "attended": 12,
+    "history": [...]
+  }
+}
 ```
 
-### Root Cause
-
-* Windows file system is case-insensitive
-* Linux (Vercel) is case-sensitive
-* File name and import casing didn’t match
-
-### Resolution
-
-* Renamed imports to match file names exactly
-* Rebuilt and redeployed
-
-This is a classic real-world production issue.
-
 ---
 
-## 9. Frontend Authentication Issue in Incognito
+## Security
 
-### Problem
+* All sensitive keys are stored in environment variables — never in code
+* CORS is strictly configured to only allow trusted origins
+* `.env` is in `.gitignore` and should never be committed
+* API keys are rotated if accidentally exposed
 
-Opening the site in incognito showed authentication prompt.
-
-### Root Cause
-
-* Vercel protection was enabled
-* Site was not fully public
-
-### Resolution
-
-* Disabled authentication in Vercel settings
-* Redeployed frontend
-
-Site became publicly accessible.
-
----
-
-## 10. Frontend → Backend Communication Failure (CORS Again)
-
-### Problem
-
-Even after deployment, frontend couldn’t send messages:
-
-```
-No 'Access-Control-Allow-Origin' header
+```javascript
+// CORS config example
+cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-portfolio.vercel.app"
+  ],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+})
 ```
 
-### Resolution
+---
 
-* Updated backend CORS allowed origins
-* Added correct Vercel production URL
-* Redeployed backend
+## Performance
 
-After this, contact form worked live.
+| Optimisation           | Detail                                                            |
+| ---------------------- | ----------------------------------------------------------------- |
+| LeetCode caching       | 10-minute in-memory TTL prevents rate limiting                    |
+| Parallel API fetching  | GitHub + LeetCode + profile data fetched simultaneously in AI bot |
+| Scroll-based animation | IntersectionObserver used instead of scroll listeners             |
+| Vite build             | Tree-shaking and code splitting for minimal bundle size           |
 
 ---
 
-## 11. Accidental `.env` Commit
+## Known Challenges Solved
 
-### Problem
-
-`.env` was accidentally pushed to GitHub.
-
-### Risks
-
-* Security breach
-* API key exposure
-
-### Resolution
-
-1. Deleted `.env` from repository
-2. Rotated API keys
-3. Added `.env` to `.gitignore`
-4. Used environment dashboard only
-
-Important security lesson learned.
+| Challenge                               | Solution                                                                 |
+| --------------------------------------- | ------------------------------------------------------------------------ |
+| CORS blocked browser requests           | Explicitly whitelisted Vercel domain in backend CORS config              |
+| Gmail SMTP timing out on Render         | Switched entirely to Resend API-based email                              |
+| Vercel build failing (case sensitivity) | Matched file names exactly — Linux is case-sensitive, Windows is not     |
+| AI giving inaccurate answers            | Built RAG-style prompt builder that injects real data before every query |
+| `.env` accidentally committed           | Deleted file, rotated all keys, moved secrets to platform dashboards     |
+| Resend API key not loading              | Ensured `dotenv.config()` runs before any imports in ES module context   |
+| Express wildcard OPTIONS crash          | Removed wildcard OPTIONS route, let CORS middleware handle preflight     |
 
 ---
 
-## 12. Final Stability Testing
+## Screenshots
 
-### Steps Taken
-
-* Tested locally
-* Tested Postman
-* Tested deployed frontend
-* Tested incognito mode
-* Verified email delivery via Resend dashboard
-
-Everything worked end-to-end.
-
----
-
-## Final Outcome
-
-* Clean architecture
-* Production-ready backend services
-* Secure environment handling
-* Reliable email delivery
-* Fully deployed frontend
+| Section  | Preview                                                 |
+| -------- | ------------------------------------------------------- |
+| Hero     | Mouse-tracking orbs, rotating image ring, stat strip    |
+| About    | Bento grid with live tiles, IntersectionObserver reveal |
+| Work     | Split-panel cards with per-project accent colors        |
+| LeetCode | Live SVG ring chart + contest rating history graph      |
+| Contact  | Split layout with working email form                    |
+| Jiya AI  | Chat panel in nav with RAG-powered responses            |
 
 ---
 
-## What This Journey Shows
+## Roadmap
 
-* Real-world problem solving
-* Debugging production systems
-* Understanding of cloud platforms
-* Proper architectural thinking
-* Ability to recover from mistakes
+* [ ] Streaming AI responses (token by token)
+* [ ] GitHub contribution graph integration
+* [ ] Blog section with MDX support
+* [ ] Dark/light theme toggle
+* [ ] Project detail pages with full case studies
+* [ ] Jiya voice mode
 
+---
 
+## Author
 
+**Siddharth Raj**
 
+* Twitter/X: [@iamsidh03](https://x.com/iamsidh03)
+* LinkedIn: [iamsidh03](https://www.linkedin.com/in/iamsidh03/)
+* GitHub: [@iamsidh03](https://github.com/iamsidh03)
+* Email: [Siddharthraj4689@gmail.com](mailto:Siddharthraj4689@gmail.com)
+
+---
+
+## License
+
+This project is open source and available under the MIT License.
+
+---
+
+<div align="center">
+
+**If this project helped you or inspired you — drop a star on GitHub. It means a lot.**
+
+Made with and way too many CORS errors by [Siddharth](https://github.com/iamsidh03)
+
+</div>
