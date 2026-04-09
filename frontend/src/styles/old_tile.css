@@ -1,0 +1,298 @@
+.tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  border-radius: 24px;
+  transition: 0.3s ease;
+}
+
+.tile:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.bio-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skill-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  background: #1b1b1b;
+  border: 1px solid #333;
+  color: #d4d4d4;
+}
+/* Experience Tile */
+.experience-tile {
+  background: linear-gradient(to bottom right, #111, #1a1a1a);
+}
+
+.exp-number {
+  font-size: 56px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.exp-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9ca3af;
+}
+/* Twitter Tile */
+.twitter-tile {
+  position: relative;
+  transition: 0.3s ease;
+  display: block;
+}
+
+.tile-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.twitter-icon {
+  font-size: 20px;
+  color: #9ca3af;
+  transition: 0.3s ease;
+}
+
+.arrow {
+  opacity: 0;
+  transition: 0.3s ease;
+  color: #9ca3af;
+}
+
+.tile-bottom .twitter-handle {
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+/* Hover Effects */
+.twitter-tile:hover .twitter-icon {
+  color: #1da1f2;
+}
+
+.twitter-tile:hover .arrow {
+  opacity: 1;
+  color: #1da1f2;
+}
+/* Stack Tile */
+.stack-tile {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional soft green glow like your original design */
+.stack-tile::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: rgba(16, 185, 129, 0.15);
+  filter: blur(60px);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.stack-title {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.stack-list {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stack-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.stack-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.stack-value {
+  display: block;
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+  margin-top: 2px;
+}
+/* Hobbies Tile */
+.hobbies-tile {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.75)
+    ),
+    url("https://images.unsplash.com/photo-1449034446853-66c86144b0ad?q=80&w=2070&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  transition: 0.3s ease;
+}
+
+/* Content wrapper */
+.hobbies-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title */
+.hobbies-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Grid */
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Hobby card */
+.hobbies-grid span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  padding: 10px 0;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: white;
+
+  transition: 0.25s ease;
+}
+
+/* Hover effect */
+.hobbies-grid span:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+/* LinkedIn Tile */
+.linkedin-tile {
+  position: relative;
+  transition: 0.3s ease;
+   display: block;
+}
+
+.linkedin-icon {
+  font-size: 20px;
+  color: #9ca3af;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.linkedin-label {
+  font-size: 14px;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+/* Reuse arrow hover */
+.linkedin-tile .arrow {
+  opacity: 0;
+  transition: 0.3s ease;
+  color: #9ca3af;
+}
+
+/* Hover effects */
+.linkedin-tile:hover .linkedin-icon {
+  color: #0077b5; /* LinkedIn blue */
+}
+
+.linkedin-tile:hover .arrow {
+  opacity: 1;
+  color: #0077b5;
+}
+
+.stack-tile {
+  position: relative;        
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 6px;
+
+  scroll-behavior: smooth;
+}
+
+/* scrollbar styling */
+.stack-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.stack-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.stack-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* bottom fade hint */
+.stack-tile::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.9)
+  );
+  pointer-events: none;
+}

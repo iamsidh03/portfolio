@@ -1,4 +1,3 @@
-
 const axios = require("axios");
 const { getCache, setCache } = require("./cache");
 
@@ -12,7 +11,7 @@ async function graphqlRequest(query, variables) {
   const response = await axios.post(
     LEETCODE_URL,
     { query, variables },
-    { headers: HEADERS, timeout: 8000 }
+    { headers: HEADERS, timeout: 8000 },
   );
 
   if (response.data.errors) {
@@ -34,11 +33,13 @@ async function getLeetCodeProfile(username) {
     contestStats,
     contestHistory,
     totalQuestionsData, //
+    recentSubmissionsData,
   ] = await Promise.allSettled([
     fetchProfile(username),
     fetchContestStats(username),
     fetchContestHistory(username),
-    fetchTotalQuestions(), // 
+    fetchTotalQuestions(),
+    fetchRecentSubmissions(username), //
   ]);
 
   if (profileData.status !== "fulfilled") {
@@ -58,19 +59,23 @@ async function getLeetCodeProfile(username) {
     contest: {
       rating:
         contestStats.status === "fulfilled"
-          ? contestStats.value.userContestRanking?.rating ?? null
+          ? (contestStats.value.userContestRanking?.rating ?? null)
           : null,
       globalRank:
         contestStats.status === "fulfilled"
-          ? contestStats.value.userContestRanking?.globalRanking ?? null
+          ? (contestStats.value.userContestRanking?.globalRanking ?? null)
           : null,
       attended:
         contestStats.status === "fulfilled"
-          ? contestStats.value.userContestRanking?.attendedContestsCount ?? 0
+          ? (contestStats.value.userContestRanking?.attendedContestsCount ?? 0)
           : 0,
       history:
         contestHistory.status === "fulfilled"
-          ? contestHistory.value.userContestRankingHistory ?? []
+          ? (contestHistory.value.userContestRankingHistory ?? [])
+          : [],
+      recent:
+        recentSubmissionsData.status === "fulfilled"
+          ? recentSubmissionsData.value.recentSubmissionList.slice(0, 5)
           : [],
     },
 
@@ -137,7 +142,7 @@ async function fetchContestHistory(username) {
 }
 
 /**
- * 
+ *
  * Total questions on LeetCode (Easy / Medium / Hard / All)
  */
 async function fetchTotalQuestions() {
@@ -173,6 +178,21 @@ function normalizeTotal(allQuestionsCount) {
     total[item.difficulty.toLowerCase()] = item.count;
   });
   return total;
+}
+async function fetchRecentSubmissions(username) {
+  const query = `
+    query ($username: String!) {
+      recentSubmissionList(username: $username) {
+        title
+        titleSlug
+        timestamp
+        statusDisplay
+        lang
+      }
+    }
+  `;
+
+  return graphqlRequest(query, { username });
 }
 
 module.exports = { getLeetCodeProfile };

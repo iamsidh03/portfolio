@@ -1,113 +1,191 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "../styles/work.css";
 
 import project1 from "../assets/project01.png";
 import project2 from "../assets/project02.png";
 import project3 from "../assets/project03.png";
 
+const projects = [
+  {
+    index: "01",
+    img: project1,
+    alt: "Paper Trading Platform",
+    title: "Paper Trading Platform",
+    badge: "Backend",
+    desc: "Real-time trading backend with live market feeds, order matching, and portfolio tracking. Built with WebSocket architecture for sub-100ms latency on live market data.",
+    tags: ["Node.js", "WebSockets", "PostgreSQL", "Finnhub API"],
+    cta: null,
+    ctaLabel: "Case Study",
+    accent: "#10b981",
+    accentRgb: "16,185,129",
+  },
+  {
+    index: "02",
+    img: project2,
+    alt: "Messenger Chat App",
+    title: "Messenger Chat App",
+    badge: "Full Stack",
+    desc: "Full-stack real-time chat system with scalable socket architecture, JWT auth, presence indicators, and a clean minimal UI inspired by modern messaging apps.",
+    tags: ["React", "Node.js", "MongoDB", "Socket.io"],
+    cta: "https://messenger-chat-app.onrender.com/",
+    ctaLabel: "Live Demo",
+    accent: "#60a5fa",
+    accentRgb: "96,165,250",
+  },
+  {
+    index: "03",
+    img: project3,
+    alt: "Sorting Visualizer",
+    title: "Sorting Visualizer",
+    badge: "DSA",
+    desc: "Interactive algorithm visualizer with real-time step animation, speed control, and dynamic array sizing — making sorting algorithms intuitive to understand.",
+    tags: ["JavaScript", "Algorithms", "Canvas API", "Visualization"],
+    cta: "https://iamsidh03.github.io/sorting-algorithms-visualizer/",
+    ctaLabel: "Live Demo",
+    accent: "#f59e0b",
+    accentRgb: "245,158,11",
+  },
+];
+
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".wk-card");
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("wk-card--visible");
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.08 }
+    );
+    els.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 100}ms`;
+      io.observe(el);
+    });
+    return () => io.disconnect();
+  }, []);
+}
+
 export default function Work() {
+  useReveal();
+
   return (
-    <section id="work" className="work-section">
-      <div className="work-header">
-        <h2 className="work-title">Selected Work</h2>
-        <p className="work-subtitle">
-          A few projects that highlight my backend, real-time, and system design experience.
+    <section id="work" className="wk-section">
+      {/* ── Header ── */}
+      <div className="wk-eyebrow">
+        <span className="wk-eyebrow-dot" />
+        <span className="wk-eyebrow-text">Selected Work</span>
+      </div>
+
+      <div className="wk-header">
+        <h2 className="wk-heading">
+          Things I've
+          <br />
+          <span className="wk-heading-ghost">built.</span>
+        </h2>
+        <p className="wk-subheading">
+          A few projects that highlight my backend,<br />
+          real-time, and system design experience.
         </p>
       </div>
 
-      <div className="projects-container">
-        {/* Project 1 */}
-        <div className="project-card">
-          <div className="project-media">
-            <img src={project1} alt="Paper Trading Platform" />
-            <span className="project-index">01</span>
-          </div>
+      {/* ── Project list ── */}
+      <div className="wk-list">
+        {projects.map((p, i) => (
+          <article
+            key={p.index}
+            className="wk-card"
+            style={{
+              "--accent": p.accent,
+              "--accent-rgb": p.accentRgb,
+            }}
+          >
+            {/* Left: content */}
+            <div className="wk-card-content">
+              {/* Top row: index + badge */}
+              <div className="wk-card-top">
+                <span className="wk-card-index">{p.index}</span>
+                <span className="wk-card-badge"
+                  style={{
+                    color: p.accent,
+                    background: `rgba(${p.accentRgb},.08)`,
+                    borderColor: `rgba(${p.accentRgb},.25)`,
+                  }}
+                >
+                  {p.badge}
+                </span>
+              </div>
 
-          <div className="project-content">
-            <h3 className="project-title">
-              Paper Trading Platform <span>Backend</span>
-            </h3>
+              <h3 className="wk-card-title">{p.title}</h3>
+              <p className="wk-card-desc">{p.desc}</p>
 
-            <p className="project-desc">
-              Real-time trading backend with live market feeds, order matching,
-              and portfolio tracking using WebSockets.
-            </p>
+              <div className="wk-card-tags">
+                {p.tags.map((t) => (
+                  <span key={t} className="wk-tag">{t}</span>
+                ))}
+              </div>
 
-            <div className="project-tags">
-              <span>Node</span>
-              <span>WebSockets</span>
-              <span>PostgreSQL</span>
-              <span>Finnhub</span>
+              {/* CTA */}
+              <div className="wk-card-footer">
+                {p.cta ? (
+                  <a
+                    href={p.cta}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="wk-cta"
+                    style={{ color: p.accent }}
+                  >
+                    <span>{p.ctaLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5"
+                      strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 17 17 7M7 7h10v10"/>
+                    </svg>
+                  </a>
+                ) : (
+                  <span className="wk-cta wk-cta--dim">
+                    <span>{p.ctaLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5"
+                      strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 17 17 7M7 7h10v10"/>
+                    </svg>
+                  </span>
+                )}
+
+                {/* Divider line */}
+                <div className="wk-card-line"
+                  style={{ background: `linear-gradient(90deg, rgba(${p.accentRgb},.5), transparent)` }}
+                />
+              </div>
             </div>
 
-            <a className="project-cta">View Case Study →</a>
-          </div>
-        </div>
+            {/* Right: image */}
+            <div className="wk-card-media">
+              {/* Glow behind image */}
+              <div className="wk-card-glow"
+                style={{ background: `radial-gradient(circle, rgba(${p.accentRgb},.2) 0%, transparent 70%)` }}
+              />
+              <div className="wk-card-img-wrap">
+                {/* Corner accents */}
+                <span className="wk-corner wk-corner--tl"
+                  style={{ borderColor: `rgba(${p.accentRgb},.6)` }} />
+                <span className="wk-corner wk-corner--br"
+                  style={{ borderColor: `rgba(${p.accentRgb},.6)` }} />
 
-        {/* Project 2 */}
-        <div className="project-card reverse">
-          <div className="project-media">
-            <img src={project2} alt="Messenger Chat App" />
-            <span className="project-index">02</span>
-          </div>
+                <img src={p.img} alt={p.alt} className="wk-card-img" />
 
-          <div className="project-content">
-            <h3 className="project-title">Messenger Chat App</h3>
+                {/* Overlay fade */}
+                <div className="wk-card-img-overlay" />
 
-            <p className="project-desc">
-              Full-stack real-time chat system with scalable socket architecture
-              and clean UI.
-            </p>
-
-            <div className="project-tags">
-              <span>React</span>
-              <span>Node</span>
-              <span>MongoDB</span>
-              <span>Socket.io</span>
+                {/* Big index watermark on image */}
+                <span className="wk-card-watermark">{p.index}</span>
+              </div>
             </div>
-
-            <a
-              href="https://messenger-chat-app.onrender.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-cta"
-            >
-              Live Demo →
-            </a>
-          </div>
-        </div>
-
-        {/* Project 3 */}
-        <div className="project-card">
-          <div className="project-media">
-            <img src={project3} alt="Sorting Visualizer" />
-            <span className="project-index">03</span>
-          </div>
-
-          <div className="project-content">
-            <h3 className="project-title">Sorting Visualizer</h3>
-
-            <p className="project-desc">
-              Interactive algorithm visualizer with speed control
-              and dynamic array size.
-            </p>
-
-            <div className="project-tags">
-              <span>JavaScript</span>
-              <span>Algorithms</span>
-              <span>Visualization</span>
-            </div>
-
-            <a
-              href="https://iamsidh03.github.io/sorting-algorithms-visualizer/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-cta"
-            >
-              Live Demo →
-            </a>
-          </div>
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   );

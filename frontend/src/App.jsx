@@ -6,7 +6,7 @@ import Work from "./sections/Work";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import Nav from "./sections/Nav";
-
+// import ChatBot from "./sections/ChatBot";
 
 import "./styles/globals.css";
 import LeetCode from "./sections/LeetCode";
@@ -55,7 +55,9 @@ function App() {
         <Work />
         <LeetCode/>
         <Contact />
+         
         <Footer />
+        {/* <ChatBot /> */}
       </main>
     </div>
   );

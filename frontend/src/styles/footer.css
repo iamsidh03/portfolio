@@ -1,28 +1,101 @@
-/* Footer Styles */
-.footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 32px 0;
-  margin-top: 60px;
+/* ═══════════════════════════════════════════════════════════════
+   footer.css — Footer
+   Dark portfolio · emerald accent · matches bento language
+═══════════════════════════════════════════════════════════════ */
 
+.ft-root {
+  position: relative;
+  padding: 0 0 40px;
+  margin-top: 80px;
+}
+
+/* ── Top rule: fades in from emerald center ── */
+.ft-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16,185,129,.3) 35%,
+    rgba(16,185,129,.5) 50%,
+    rgba(16,185,129,.3) 65%,
+    transparent 100%
+  );
+  margin-bottom: 32px;
+}
+
+/* ── Inner row ─────────────────────────────────────────────── */
+.ft-inner {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 16px;
-
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.footer-links {
-  display: flex;
+  justify-content: space-between;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
-.footer-link {
-  color: #9ca3af;
-  transition: 0.3s ease;
+/* ── Brand (left) ───────────────────────────────────────────── */
+.ft-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ft-brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16,185,129,.7);
+  animation: ft-pulse 2s ease-in-out infinite;
+}
+@keyframes ft-pulse {
+  0%,100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(.7);  opacity: .5; }
+}
+.ft-brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -.01em;
 }
 
-.footer-link:hover {
-  color: white;
+/* ── Copyright (center) ─────────────────────────────────────── */
+.ft-copy {
+  font-size: 12.5px;
+  color: #374151;
+  margin: 0;
+  letter-spacing: .01em;
+}
+
+/* ── Socials (right) ────────────────────────────────────────── */
+.ft-socials {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ft-social {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: #4b5563;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: color .2s, background .2s, border-color .2s, transform .2s;
+}
+.ft-social:hover {
+  color: #fff;
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.12);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ft-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
 }
